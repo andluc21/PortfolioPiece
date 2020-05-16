@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-import Login from "../Login/index";
+import { AdminSignIn } from "../Login/index";
 import Profile from "../Profile/index";
 import QuizCreate from "../QuizCreate/index";
 import QuizTake from "../QuizTake/index";
@@ -33,7 +33,7 @@ const App = () => {
           <Content>
             <div>
               <Route path="/" exact strict component={Home} />
-              <Route path="/Login" exact strict component={Login} />
+              <Route path="/Login" exact strict component={AdminSignIn} />
               <Route path="/Profile" exact strict component={Profile} />
               <Route path="/CreateQuiz" exact strict component={QuizCreate} />
               <Route path="/TakeQuiz" exact strict component={QuizTake} />
