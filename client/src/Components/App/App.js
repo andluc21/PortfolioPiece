@@ -8,7 +8,6 @@ import QuizTake from "../QuizTake/index";
 import Home from "../Home/index";
 
 import { Layout, Header, Navigation, Drawer, Content } from "react-mdl";
-import Upload from "../Upload/index";
 
 const App = () => {
   return (
