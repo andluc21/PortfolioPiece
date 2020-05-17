@@ -3,11 +3,12 @@ import "./App.css";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import { AdminSignIn } from "../Login/index";
 import Profile from "../Profile/index";
-import QuizCreate from "../QuizCreate/index";
+import Upload2 from "../Upload/index";
 import QuizTake from "../QuizTake/index";
 import Home from "../Home/index";
 
 import { Layout, Header, Navigation, Drawer, Content } from "react-mdl";
+import Upload from "../Upload/index";
 
 const App = () => {
   return (
@@ -35,7 +36,7 @@ const App = () => {
               <Route path="/" exact strict component={Home} />
               <Route path="/Login" exact strict component={AdminSignIn} />
               <Route path="/Profile" exact strict component={Profile} />
-              <Route path="/CreateQuiz" exact strict component={QuizCreate} />
+              <Route path="/CreateQuiz" exact strict component={Upload2} />
               <Route path="/TakeQuiz" exact strict component={QuizTake} />
             </div>
           </Content>
