@@ -1,73 +1,48 @@
-import React from "react";
-import { useState } from "react";
+import React from 'react';
+import PasswordForm from '../LoginComponents/PasswordForm';
+import UsernameForm from '../LoginComponents/UsernameForm';
 
-import "./Admin.css";
-import { Password } from "./Password";
-import { SignInPassword } from "./SignInPassword";
-import { Email } from "./Email";
-import { SignInEmail } from "./SignInEmail";
-import { ThaButton } from "./Button";
 
-export const AdminSignIn = () => {
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [signInPassword, setSignInPassword] = useState("");
-  const [signInEmail, setSignInEmail] = useState("");
+const Login = (username, password, submitted, loading, error) => {
+  //
+  // // Our fields to handle changes to this overall form/page;
+  // const [state, setState] = React.useState(setState());
+  //
+  // setState = {
+  //   username: '',
+  //   password: '',
+  //   submitted: false,
+  //   loading: false,
+  //   error: ''
+  // };
+  //
+  // function handleChange(e) {
+  //   e.target.value;
+  //   this.setState({ [name]: value });
+  // }
+  // // Submit login credentials to Express API to be routed;
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   handleChange(e);
+  //   console.log("Submitting:");
+  // };
 
-  const onPasswordChange = event => {
-    setPassword(event.target.value);
-  };
-  const onEmailChange = event => {
-    setEmail(event.target.value);
-  };
+    return(
+        <div>
+            <main>
+                <h1>Use the forms below to submit yr login credentials, human.</h1>
 
-  const onSignInPasswordChange = event => {
-    setSignInPassword(event.target.value);
-  };
-
-  const onSignInEmailChange = event => {
-    setSignInEmail(event.target.value);
-  };
-
-  const isPasswordValid = password
-    ? password.length > 5 && password.length < 15
-    : true;
-
-  const isSignInPasswordValid = signInPassword
-    ? signInPassword.length > 5 && signInPassword.length < 15
-    : true;
-
-  const isEmailValid = email ? email.indexOf("@") > -1 : true;
-
-  const isSignInEmailValid = signInEmail ? signInEmail.indexOf("@") > -1 : true;
-
-  const onSubmitHandler = () => {};
-  return (
-    <div>
-      <h1 className="adminheader">Admin </h1>
-      <div classname="form-wrapper">
-        <h2 className="adminheader"> New User ?</h2>
-        <form onsubmit={onSubmitHandler}>
-          <Email onChange={onEmailChange} isValid={isEmailValid} />
-          <Password onChange={onPasswordChange} isValid={isPasswordValid} />
-
-          <div className="createAccount">
-            <button type="submit">Create Account</button>
-          </div>
-          <h2 className="adminheader"> Sign In</h2>
-
-          <SignInEmail
-            onChange={onSignInEmailChange}
-            isValid={isSignInEmailValid}
-          />
-          <SignInPassword
-            onChange={onSignInPasswordChange}
-            isValid={isSignInPasswordValid}
-          />
-
-          <ThaButton />
-        </form>
-      </div>
-    </div>
-  );
+                    <UsernameForm />
+                    <PasswordForm />
+                    {/*
+                      Button below will submit all info entered into both of the above fields in this view
+                      using an Express route (by calling GET)
+                      */}
+                    {/*<button id="submitLoginCreds" type="submit" onClick={handleSubmit()}>Submit login credentials.</button>*/}
+                    {/*<button type="submit" className="submitButton" onClick={password}>Submit your response.</button>*/}
+            </main>
+        </div>
+        );
 };
+
+export default Login;

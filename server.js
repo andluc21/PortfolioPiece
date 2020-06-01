@@ -1,26 +1,46 @@
-const express = require("express");
-const fileUpload = require("express-fileupload");
+const mongoose = require('mongoose');
+const express = require('express');
+const morgan = require('morgan');
+const path = require('path');
+const Subject = require('./client/src/models/Subject')
 
 const app = express();
+const PORT = process.env.PORT || 8080;
 
-app.use(fileUpload());
 
-// Upload Endpoint ( uploads folder )
 
-app.post("/upload", (req, res) => {
-  if (req.files === null) {
-    return res.status(400).json({ msg: "No File uploaded" });
-  }
+const MONGODB_URI = 'mongodb+srv://quizstar:quizstar1@mongodbqs-sdfsq.mongodb.net/test?retryWrites=true&w=majority'
+//'mongodb+srv://quizstar:quizstar1@mongodbqs-sdfsq.mongodb.net/test?retryWrites=true&w=majority'
 
-  const file = req.files.file;
+mongoose.connect(MONGODB_URI,{useNewUrlParser: true,
+  useUnifiedTopology:true})
+  .then(() => {
+    console.log("Connected to Mongo");
+  })
+   .catch(err => {
+     console.error("Could not connect to Mongo", err)
+      process.exit();
+   });
 
-  file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send(err);
-    }
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
-    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-  });
+app.get('/subjects', (req, res) =>{
+
+  Subject.find({}).sort({})
+    .then((data) =>{
+      console.log('Data: ',data);
+      res.json(data);
+    })
+    .catch((error) =>{
+      console.log('error');
+    });
+
 });
-app.listen(5000, () => console.log("Server Started..."));
+
+
+//HTTP request logger
+app.use(morgan('tiny'));
+
+// launch our backend into a port
+app.listen(PORT, console.log(`LISTENING ON PORT ${PORT}`));
