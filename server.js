@@ -37,6 +37,12 @@ app.get('/subjects', (req, res) =>{
     });
 
 });
+// demo endpoint
+app.post('/updateUser',(req,res)=>{
+    // maybe mongoose implementation?
+    models.User.update(req.body.user)
+    // req.body.base64Img
+})
 
 
 //HTTP request logger
