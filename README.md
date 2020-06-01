@@ -1,5 +1,11 @@
 cd PortfolioPiece 
 
 
+node server.js 
 
-npm run dev
+cd into client 
+
+npm install 
+
+
+npm start 
