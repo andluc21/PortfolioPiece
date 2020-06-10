@@ -1,73 +1,108 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PasswordForm from "../LoginComponents/PasswordForm";
+import UsernameForm from "../LoginComponents/UsernameForm";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import "./Admin.css";
-import { Password } from "./Password";
-import { SignInPassword } from "./SignInPassword";
-import { Email } from "./Email";
-import { SignInEmail } from "./SignInEmail";
-import { ThaButton } from "./Button";
+// This component represents the overall login form the
+// users uses to submit their credentials through;
+function Login() {
+  // State HOOKS;
+  // Error used to handle error conditions;
+  const [error, setError] = useState(false);
+  // isLoaded lets the front-end know that the user is now successfully logged in;
+  // If user is logged in, unnecessary to display login forms;
+  const [isLoaded, setLoaded] = useState(false);
 
-export const AdminSignIn = () => {
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [signInPassword, setSignInPassword] = useState("");
-  const [signInEmail, setSignInEmail] = useState("");
+  const [loginCreds, setLoginCreds] = useState("");
 
-  const onPasswordChange = event => {
-    setPassword(event.target.value);
+  // The following 2 represent the info the user inputs in order to login
+  const [usernameInput, setUsernameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+
+  // 'Payload' represents the array of data that the db will return upon successful (!error) condition;
+  // const [payload, setPayload] = useState([]);
+
+  // The following two consts will update and store the creds the user enters;
+  const username = () => {
+    setUsernameInput(passwordInput);
   };
-  const onEmailChange = event => {
-    setEmail(event.target.value);
+  const password = () => {
+    setPasswordInput(passwordInput);
   };
 
-  const onSignInPasswordChange = event => {
-    setSignInPassword(event.target.value);
+  // This const refers to the url of the service we are contacting;
+  const apiURL = "https://localhost:8080";
+
+  // useEffect updates the look/behavior of this component upon updates to
+  // user login data, which is signalled by onClick;
+  // Sends login data back to our API, which in turn attempts
+  // to fetch said data from MongoDB;
+  useEffect(() => {
+    const response = fetch(apiURL, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: new Headers({
+        "Content-Type": "application/x-www-form-urlencoded",
+      }),
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(username, password), // body data type must match "Content-Type" header
+    }).then((response) => response.json()); // parses JSON response into native JavaScript objects
+  });
+
+  // This method retrieves server response with the provided token;
+  function requestUserInfo(token) {
+    return fetch(`${apiURL}/signin`, {
+      method: "GET",
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+      }),
+    }).then((response) => response.json());
+  }
+  // This is used to display the login forms in this view if the user has
+  // not logged in yet, i.e. if !isLoaded;
+  const login = () => {
+    if (!isLoaded) {
+      return (
+        <div>
+          <UsernameForm />
+          <PasswordForm />
+        </div>
+      );
+    }
   };
 
-  const onSignInEmailChange = event => {
-    setSignInEmail(event.target.value);
+  // Our click handler for login-credentials-submission event;
+  // Sends the user input data to API for validation and retrieval
+  // of related account info, if successful;
+  // Updates all related state Hooks;
+  const handleClick = () => {
+    // Update loginCreds state array with user input;
+    // The individual components handle onSubmit/values entered,
+    // so no need for it here;
+    setLoginCreds([<UsernameForm username />, <PasswordForm password />]);
+
+    // Use 'login' to re-render login components (if login unsuccessful),
+    // sweep them away if login is successful;
+    login();
   };
 
-  const isPasswordValid = password
-    ? password.length > 5 && password.length < 15
-    : true;
-
-  const isSignInPasswordValid = signInPassword
-    ? signInPassword.length > 5 && signInPassword.length < 15
-    : true;
-
-  const isEmailValid = email ? email.indexOf("@") > -1 : true;
-
-  const isSignInEmailValid = signInEmail ? signInEmail.indexOf("@") > -1 : true;
-
-  const onSubmitHandler = () => {};
   return (
     <div>
-      <h1 className="adminheader">Admin </h1>
-      <div classname="form-wrapper">
-        <h2 className="adminheader"> New User ?</h2>
-        <form onsubmit={onSubmitHandler}>
-          <Email onChange={onEmailChange} isValid={isEmailValid} />
-          <Password onChange={onPasswordChange} isValid={isPasswordValid} />
+      <main>
+        <h1></h1>
+        {/*{window.onchange=login()}*/}
 
-          <div className="createAccount">
-            <button type="submit">Create Account</button>
-          </div>
-          <h2 className="adminheader"> Sign In</h2>
-
-          <SignInEmail
-            onChange={onSignInEmailChange}
-            isValid={isSignInEmailValid}
-          />
-          <SignInPassword
-            onChange={onSignInPasswordChange}
-            isValid={isSignInPasswordValid}
-          />
-
-          <ThaButton />
-        </form>
-      </div>
+        {/*
+                    Button below will submit all info entered to find user account/data,
+                    error if not;
+                    */}
+        <button id="submitLoginCreds" type="submit" onClick={handleClick}>
+          Submit login credentials.
+        </button>
+      </main>
     </div>
   );
-};
+}
+
+export default Login;

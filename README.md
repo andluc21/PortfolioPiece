@@ -1,11 +1,19 @@
-cd PortfolioPiece 
+# QuizStar:
 
+An app for Quiz lovers !
 
-node server.js 
+In the main folder run
 
-cd into client 
+`node server.js`
 
-npm install 
+in the client folder run
 
+`npm install`
 
-npm start 
+as well as
+
+`npm run`
+
+Quiz Away !
+
+Team members: Jen Villacis, Luca Andolina, Yunao Guo, Derek Hendrick, Vita A. Harvey
