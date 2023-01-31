@@ -16,4 +16,4 @@ as well as
 
 Quiz Away !
 
-Team members: Jen Villacis, Luca Andolina, Yunao Guo, Derek Hendrick, Vita A. Harvey
+
