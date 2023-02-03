@@ -1,6 +1,6 @@
-### QuizStar:
+# QuizStar:
 
-A react application designed for users to create quizzes and take quizzes. 
+#### A react application designed for users to create quizzes and take quizzes. 
 
 ## Setting up the project
 ```bash
