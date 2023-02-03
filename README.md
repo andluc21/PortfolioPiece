@@ -1,9 +1,11 @@
 ### QuizStar:
 
+A react application designed for users to create quizzes and take quizzes. 
+
 ## Setting up the project
 ```bash
 
-# Install deps
+# Install dependencies
 npm install
 
 # Start server
@@ -11,7 +13,7 @@ node server.js
 
 cd client
 
-# Install deps
+# Install dependencies
 npm install
 
 # Start app
