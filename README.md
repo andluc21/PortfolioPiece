@@ -1,5 +1,4 @@
-## QuizStar:
-# An app for Quiz lovers !
+### QuizStar:
 
 ## Setting up the project
 ```bash
